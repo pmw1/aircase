@@ -1,0 +1,242 @@
+import time
+import board
+import busio
+from digitalio import Direction
+from adafruit_mcp230xx.mcp23017 import MCP23017
+i2c=busio.I2C(board.SCL, board.SDA)
+
+bus1=MCP23017(i2c, address=0x20)  ## SStatus LEDs -- ALL OUTPUT (i think)
+#bus2=MCP23017(i2c, address=0x24)
+#bus3=MCP23017(i2c, address=0x25)
+
+
+io0=bus1.get_pin(0)
+io1=bus1.get_pin(1)
+io2=bus1.get_pin(2)
+io3=bus1.get_pin(3)
+io4=bus1.get_pin(4)
+io5=bus1.get_pin(5)
+io6=bus1.get_pin(6)
+io7=bus1.get_pin(7)
+io8=bus1.get_pin(8)
+io9=bus1.get_pin(9)
+io10=bus1.get_pin(10)
+io11=bus1.get_pin(11)
+io12=bus1.get_pin(12)
+io13=bus1.get_pin(13)
+io14=bus1.get_pin(14)
+io15=bus1.get_pin(15)
+io0.direction=Direction.OUTPUT
+io1.direction=Direction.OUTPUT
+io2.direction=Direction.OUTPUT
+io3.direction=Direction.OUTPUT
+io4.direction=Direction.OUTPUT
+io5.direction=Direction.OUTPUT
+io6.direction=Direction.OUTPUT
+io7.direction=Direction.OUTPUT
+io8.direction=Direction.OUTPUT
+io9.direction=Direction.OUTPUT
+io10.direction=Direction.OUTPUT
+io11.direction=Direction.OUTPUT
+io12.direction=Direction.OUTPUT
+io13.direction=Direction.OUTPUT
+io14.direction=Direction.OUTPUT
+io15.direction=Direction.OUTPUT
+
+
+
+def clearStatusLEDs(): 
+	io8.value=False  #ROW A
+	io9.value=False #ROW B
+	io10.value=False #ROW C
+	io11.value=False #ROW D
+	io12.value=False #ROW E
+
+	io0.value=True #COL 1
+	io1.value=True #COL 2
+	io2.value=True #COL 3
+	io3.value=True #COL 4
+	io4.value=True #COL 5
+	io5.value=True #COL 6
+	time.sleep(.4)
+
+def activateLED(row,col):
+
+	## COLS must be set LOW (False) to activate:
+	if col == "1":
+		io1.value=True
+		io2.value=True
+		io3.value=True
+		io4.value=True
+		io5.value=True
+		io0.value=False
+	if col == "2":
+		io0.value=True
+		io2.value=True
+		io3.value=True
+		io4.value=True
+		io5.value=True
+		io1.value=False
+	if col == "3":
+		io0.value=True
+		io1.value=True
+		io3.value=True
+		io4.value=True
+		io5.value=True
+		io2.value=False
+	if col == "4":
+		io0.value=True
+		io1.value=True
+		io2.value=True
+		io4.value=True
+		io5.value=True
+		io3.value=False
+	if col == "5":
+		io0.value=True
+		io1.value=True
+		io2.value=True
+		io3.value=True
+		io5.value=True
+		io4.value=False
+	if col == "6":
+		io0.value=True
+		io1.value=True
+		io2.value=True
+		io3.value=True
+		io4.value=True
+		io5.value=False
+	
+	### Rows
+	if row == "A":
+		io9.value=False #Row B LOW
+		io10.value=False #Row C LOW
+		io11.value=False #Row D LOW
+		io12.value=False #Row E LOW
+		io8.value=True #Row A HI
+	if row == "B":
+		io8.value=False
+		io10.value=False
+		io11.value=False
+		io12.value=False
+		io9.value=True
+	if row == "C":
+		io8.value=False
+		io9.value=False
+		io11.value=False
+		io12.value=False
+		io10.value=True
+	if row == "D":
+		io8.value=False
+		io9.value=False
+		io10.value=False
+		io12.value=False
+		io11.value=True
+	if row == "E":
+		io8.value=False
+		io9.value=False
+		io10.value=False
+		io11.value=False
+		io12.value=True
+
+	
+	return
+
+
+def switchOnTest():
+	io0.value=True
+	print("io0")
+	time.sleep(2)
+	io1.value=True
+	print("io1")
+	time.sleep(2)
+	io2.value=True
+	print("io2")
+	time.sleep(2)
+	io3.value=True
+	print("io3")
+	time.sleep(2)
+	io4.value=True
+	print("io4")
+	time.sleep(2)
+	io5.value=True
+	print("io5")
+	time.sleep(2)
+	io6.value=True
+	print("io6")
+	time.sleep(2)
+	io7.value=True
+	print("io7")
+	time.sleep(2)
+	io8.value=True
+	print("io8")
+	time.sleep(2)
+	io9.value=True
+	print("io9")
+	time.sleep(2)
+	io10.value=True
+	print("io10")
+	time.sleep(2)
+	io12.value=True
+	print("io12")
+	time.sleep(2)
+	io13.value=True
+	print("io13")
+	time.sleep(2)
+	io14.value=True
+	print("io14")
+	time.sleep(2)
+	io15.value=True
+	print("io15")
+	time.sleep(2)
+def testMatrix():
+	activateLED("A","1")
+	activateLED("A","2")
+	activateLED("A","3")
+	activateLED("A","4")
+	activateLED("A","5")
+	activateLED("A","6")
+	#B
+	activateLED("B","1")
+	activateLED("B","2")
+	activateLED("B","3")
+	activateLED("B","4")
+	activateLED("B","5")
+	activateLED("B","6")
+	#C
+	activateLED("C","1")
+	activateLED("C","2")
+	activateLED("C","3")
+	activateLED("C","4")
+	activateLED("C","5")
+	activateLED("C","6")
+	#D
+	activateLED("D","1")
+	activateLED("D","2")
+	activateLED("D","3")
+	activateLED("D","4")
+	activateLED("D","5")
+	activateLED("D","6")
+	#E
+	activateLED("E","1")
+	activateLED("E","2")
+	activateLED("E","3")
+	activateLED("E","4")
+	activateLED("E","5")
+	activateLED("E","6")
+
+
+clearStatusLEDs()
+testMatrix()
+
+#switchOnTest()
+#activateLED("A","3")
+while True:
+	testMatrix()
+	#activateLED("A","2")
+	#activateLED("D","3")
+
+
+
+
+
+
